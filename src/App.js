@@ -32,15 +32,30 @@ function Form({ onAddStudent }) {
   const [website, setWebsite] = useState("");
   const [image, setImage] = useState("");
   const [gender, setGender] = useState("Male");
-  const [skill, setSkill] = useState("");
+  const [skills, setSkills] = useState({
+    ReactJs: false,
+    NodeJs: false,
+    firebase: false,
+    MongoDB: false,
+    php: false,
+    git: false,
+  });
+
+  function handleChange(evt) {
+    const { name, checked } = evt.target;
+    setSkills((prevSkills) => ({ ...prevSkills, [name]: checked }));
+  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    if (!name || !email || !website || !gender || !skill) {
+    if (!name || !email || !website || !gender || !Object.values(skills).includes(true)) {
       alert("enter the complete details");
       return;
     }
+
+    const selectedSkills = Object.keys(skills).filter((skill) => skills[skill]);
+
 
     const newStudent = {
       id: Date.now(),
@@ -49,7 +64,7 @@ function Form({ onAddStudent }) {
       website,
       image,
       gender,
-      skill,
+      skills: selectedSkills,
     };
     console.log(newStudent);
     // clearing input fields
@@ -59,7 +74,14 @@ function Form({ onAddStudent }) {
     setWebsite("");
     setImage("");
     setGender("");
-    setSkill("");
+    setSkills({
+      ReactJs: false,
+      NodeJs: false,
+      firebase: false,
+      MongoDB: false,
+      php: false,
+      git: false,
+    });
   }
 
   return (
@@ -99,12 +121,56 @@ function Form({ onAddStudent }) {
           <option value="female">Female</option>
         </select>
         <label>Skills</label>
-        <input
-          type="text"
-          placeholder="skills"
-          value={skill}
-          onChange={(e) => setSkill(e.target.value)}
-        ></input>
+        <div>
+          <input
+            type="checkbox"
+            name="ReactJs"
+            checked={skills.ReactJs}
+            onChange={handleChange}
+          />
+          <label>ReactJs</label>
+
+          <input
+            type="checkbox"
+            name="nodeJs"
+            checked={skills.NodeJs}
+            onChange={handleChange}
+          />
+          <label>nodeJs</label>
+
+          <input
+            type="checkbox"
+            name="firebase"
+            checked={skills.firebase}
+            onChange={handleChange}
+          />
+          <label>firebase</label>
+
+          <input
+            type="checkbox"
+            name="mongoDB"
+            checked={skills.MongoDB}
+            onChange={handleChange}
+          />
+          <label>mongoDB</label>
+
+          <input
+            type="checkbox"
+            name="php"
+            checked={skills.php}
+            onChange={handleChange}
+          />
+          <label>php</label>
+
+          <input
+            type="checkbox"
+            name="git"
+            checked={skills.git}
+            onChange={handleChange}
+          />
+          <label>git</label>
+        </div>
+
         <button onClick={handleSubmit}>
           <FontAwesomeIcon icon={faUserPlus} />
           Enroll Student
@@ -115,8 +181,15 @@ function Form({ onAddStudent }) {
           setName("");
           setEmail("");
           setWebsite("");
-          setSkill("");
-          setImage((prevImg)=>prevImg);
+          setSkills({
+            ReactJs: false,
+            NodeJs: false,
+            firebase: false,
+            MongoDB: false,
+            php: false,
+            git: false,
+          });
+          setImage((prevImg) => prevImg);
           setGender("male");
         }}
       >
@@ -147,7 +220,7 @@ function Student({ student }) {
         <p>{student.gender}</p>
         <p>{student.email}</p>
         <p>{student.website}</p>
-        <p>{student.skill}</p>
+        <p>{student.skills.join(", ")}</p>
       </div>
       <div>
         <h3>Image</h3>
