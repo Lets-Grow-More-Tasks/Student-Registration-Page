@@ -1,3 +1,6 @@
+# Preview
+![image](https://github.com/sharma-dikshant/Student-Registration-Page/assets/146231831/c6ef6447-b6ba-4857-abe8-847b021855a8)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
